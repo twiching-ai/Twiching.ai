@@ -1,0 +1,1217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Twiching.ai - Unified Communication Platform</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #00AEEF;
+            --accent-color: #FF6F61;
+            --text-color: #2E3A59;
+            --background-color: #F8F9FB;
+            --white: #FFFFFF;
+            --border-radius: 12px;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            --shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.12);
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1rem 2rem;
+            background: rgba(248, 249, 251, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            transition: var(--transition);
+            border-bottom: 1px solid rgba(46, 58, 89, 0.1);
+        }
+
+        .header.scrolled {
+            background: rgba(248, 249, 251, 0.98);
+            box-shadow: var(--shadow);
+        }
+
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .nav-link:hover {
+            color: var(--primary-color);
+        }
+
+        .cta-button {
+            background: var(--accent-color);
+            color: var(--white);
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .cta-button.primary {
+            background: var(--primary-color);
+        }
+
+        .cta-button.ghost {
+            background: transparent;
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 8rem 2rem 4rem;
+            text-align: center;
+            background: linear-gradient(135deg, var(--background-color) 0%, rgba(0, 174, 239, 0.05) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="2" fill="%2300AEEF" opacity="0.1"><animate attributeName="r" values="2;4;2" dur="3s" repeatCount="indefinite"/></circle></svg>') repeat;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(45deg, var(--text-color), var(--primary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+            opacity: 0.8;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .section {
+            padding: 4rem 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 3rem;
+            color: var(--text-color);
+        }
+
+        /* Partners */
+        .partners {
+            background: var(--white);
+            border-radius: var(--border-radius);
+            margin: 2rem auto;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+        }
+
+        .partners-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .partner-logo {
+            height: 60px;
+            background: #E5E7EB;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            color: #6B7280;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .partner-logo:hover {
+            transform: scale(1.05);
+            background: var(--primary-color);
+            color: var(--white);
+        }
+
+        /* Solutions Grid */
+        .solutions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .solution-card {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .solution-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+            transform: scaleX(0);
+            transition: var(--transition);
+        }
+
+        .solution-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .solution-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .solution-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            color: var(--white);
+            font-size: 1.5rem;
+        }
+
+        .solution-card h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Benefits Section */
+        .benefits {
+            background: var(--white);
+            border-radius: var(--border-radius);
+            padding: 3rem;
+            margin: 2rem 0;
+            box-shadow: var(--shadow);
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .benefit-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            padding: 1rem;
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+        }
+
+        .benefit-item:hover {
+            background: rgba(0, 174, 239, 0.05);
+        }
+
+        .benefit-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            flex-shrink: 0;
+        }
+
+        /* Platform Section */
+        .platform {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .platform-mockup {
+            background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            color: var(--white);
+            text-align: center;
+            height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .feature-list {
+            list-style: none;
+        }
+
+        .feature-list li {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            padding: 0.5rem;
+            border-radius: 8px;
+            transition: var(--transition);
+        }
+
+        .feature-list li:hover {
+            background: rgba(0, 174, 239, 0.05);
+        }
+
+        .check-icon {
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+
+        /* Who We Help */
+        .help-tabs {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .help-tab {
+            padding: 1rem 2rem;
+            border: 2px solid transparent;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: var(--transition);
+            text-align: center;
+            background: var(--white);
+            box-shadow: var(--shadow);
+        }
+
+        .help-tab.active,
+        .help-tab:hover {
+            border-color: var(--primary-color);
+            transform: translateY(-2px);
+        }
+
+        /* Why Choose Us */
+        .why-choose {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+
+        .why-item {
+            text-align: center;
+            padding: 2rem;
+            background: var(--white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .why-item:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .why-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        /* Testimonials */
+        .testimonials {
+            background: var(--white);
+            border-radius: var(--border-radius);
+            padding: 3rem;
+            box-shadow: var(--shadow);
+        }
+
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .testimonial {
+            background: var(--background-color);
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            position: relative;
+        }
+
+        .testimonial::before {
+            content: '"';
+            position: absolute;
+            top: -10px;
+            left: 20px;
+            font-size: 4rem;
+            color: var(--primary-color);
+            opacity: 0.3;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-weight: 600;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            color: var(--white);
+            text-align: center;
+            padding: 4rem 2rem;
+            border-radius: var(--border-radius);
+            margin: 2rem 0;
+        }
+
+        .cta-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .cta-section p {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .cta-button.white {
+            background: var(--white);
+            color: var(--primary-color);
+        }
+
+        /* FAQ */
+        .faq-item {
+            background: var(--white);
+            border-radius: var(--border-radius);
+            margin-bottom: 1rem;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+
+        .faq-question {
+            padding: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .faq-question:hover {
+            background: rgba(0, 174, 239, 0.05);
+        }
+
+        .faq-answer {
+            padding: 0 1.5rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .faq-answer.active {
+            max-height: 200px;
+            padding: 0 1.5rem 1.5rem;
+        }
+
+        .faq-toggle {
+            transition: var(--transition);
+        }
+
+        .faq-toggle.active {
+            transform: rotate(180deg);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--text-color);
+            color: var(--white);
+            padding: 3rem 0 1rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-column h4 {
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-column a:hover {
+            color: var(--primary-color);
+        }
+
+        .newsletter {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .newsletter input {
+            flex: 1;
+            padding: 0.75rem;
+            border: none;
+            border-radius: var(--border-radius);
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--white);
+        }
+
+        .newsletter input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            opacity: 0.8;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .platform {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-buttons,
+            .cta-buttons {
+                flex-direction: column;
+            }
+        }
+
+        /* Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .bounce {
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-10px);
+            }
+            60% {
+                transform: translateY(-5px);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header" id="header">
+        <nav class="nav">
+            <a href="https://www.twiching.ai/" class="logo">Twiching.ai</a>
+            <ul class="nav-menu">
+                <li><a href="https://www.twiching.ai/products/" class="nav-link">Products</a></li>
+                <li><a href="#solutions" class="nav-link">Solutions</a></li>
+                <li><a href="https://www.twiching.ai/about-us/" class="nav-link">Insights</a></li>
+                <li><a href="https://www.twiching.ai/pricing/" class="nav-link">Pricing</a></li>
+            </ul>
+            <a href="https://www.twiching.ai/" class="cta-button">Get Started</a>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1 class="fade-in">Unified Solutions – Seamless Communication for Growing Businesses</h1>
+            <p class="fade-in">Transform your business communication with our AI-powered platform that integrates voice, messaging, and data analytics in one unified solution.</p>
+            <div class="hero-buttons fade-in">
+                <a href="https://www.twiching.ai/" class="cta-button primary">Get Started</a>
+                <a href="https://www.twiching.ai/" class="cta-button ghost">View Pricing</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Partners -->
+    <section class="section">
+        <div class="container">
+            <div class="partners fade-in">
+                <h3 style="text-align: center; margin-bottom: 2rem; opacity: 0.7;">Trusted by leading businesses in Asia</h3>
+                <div class="partners-grid">
+                    <div class="partner-logo">TechCorp</div>
+                    <div class="partner-logo">GlobalLink</div>
+                    <div class="partner-logo">ConnectPro</div>
+                    <div class="partner-logo">VoiceHub</div>
+                    <div class="partner-logo">CloudTech</div>
+                    <div class="partner-logo">NetSolutions</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Solutions Overview -->
+    <section class="section" id="solutions">
+        <div class="container">
+            <h2 class="section-title fade-in">Our Solutions</h2>
+            <div class="solutions-grid">
+                <div class="solution-card fade-in">
+                    <div class="solution-icon">📞</div>
+                    <h3>Voice Traffic Management</h3>
+                    <p>Optimize call routing and ensure crystal-clear voice quality with intelligent traffic management.</p>
+                </div>
+                <div class="solution-card fade-in">
+                    <div class="solution-icon">💬</div>
+                    <h3>SMS Gateway</h3>
+                    <p>Reliable bulk messaging solutions with global reach and real-time delivery tracking.</p>
+                </div>
+                <div class="solution-card fade-in">
+                    <div class="solution-icon">🔗</div>
+                    <h3>SIP Termination</h3>
+                    <p>High-quality voice termination services with competitive rates and premium routes.</p>
+                </div>
+                <div class="solution-card fade-in">
+                    <div class="solution-icon">📊</div>
+                    <h3>Call Analytics</h3>
+                    <p>Advanced analytics and reporting to optimize your communication performance.</p>
+                </div>
+                <div class="solution-card fade-in">
+                    <div class="solution-icon">🛡️</div>
+                    <h3>Fraud Protection</h3>
+                    <p>AI-powered fraud detection to protect your network from suspicious activities.</p>
+                </div>
+                <div class="solution-card fade-in">
+                    <div class="solution-icon">⚡</div>
+                    <h3>API Integration</h3>
+                    <p>Seamless integration with your existing systems through robust APIs.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title fade-in">Why Choose Our Platform</h2>
+            <div class="benefits fade-in">
+                <div class="benefits-grid">
+                    <div class="benefit-item">
+                        <div class="benefit-icon">🚀</div>
+                        <div>
+                            <h4>Enhanced Performance</h4>
+                            <p>Experience superior call quality and reduced latency with our optimized infrastructure.</p>
+                        </div>
+                    </div>
+                    <div class="benefit-item">
+                        <div class="benefit-icon">💰</div>
+                        <div>
+                            <h4>Cost Efficiency</h4>
+                            <p>Reduce operational costs while maintaining premium service quality.</p>
+                        </div>
+                    </div>
+                    <div class="benefit-item">
+                        <div class="benefit-icon">🔒</div>
+                        <div>
+                            <h4>Enterprise Security</h4>
+                            <p>Bank-grade security protocols to protect your sensitive communications.</p>
+                        </div>
+                    </div>
+                    <div class="benefit-item">
+                        <div class="benefit-icon">📈</div>
+                        <div>
+                            <h4>Scalable Solutions</h4>
+                            <p>Grow your business with solutions that scale with your needs.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- All-in-One Platform -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title fade-in">All-in-One Communication Platform</h2>
+            <div class="platform fade-in">
+                <div class="platform-mockup">
+                    <div>
+                        <h3>Dashboard Preview</h3>
+                        <p>Real-time monitoring and control</p>
+                    </div>
+                </div>
+                <div>
+                    <h3>Everything you need in one place</h3>
+                    <ul class="feature-list">
+                        <li><span class="check-icon">✓</span> Real-time call monitoring and analytics</li>
+                        <li><span class="check-icon">✓</span> Advanced routing and load balancing</li>
+                        <li><span class="check-icon">✓</span> Comprehensive fraud detection</li>
+                        <li><span class="check-icon">✓</span> Multi-channel messaging support</li>
+                        <li><span class="check-icon">✓</span> API-first architecture</li>
+                        <li><span class="check-icon">✓</span> 24/7 expert support</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Who We Help -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title fade-in">Who We Help</h2>
+            <div class="help-tabs fade-in">
+                <div class="help-tab active">
+                    <h4>Startups</h4>
+                    <p>Scale quickly with our flexible solutions</p>
+                </div>
+                <div class="help-tab">
+                    <h4>SMEs</h4>
+                    <p>Optimize costs while growing your business</p>
+                </div>
+                <div class="help-tab">
+                    <h4>Enterprises</h4>
+                    <p>Enterprise-grade reliability and security</p>
+                </div>
+                <div class="help-tab">
+                    <h4>Resellers</h4>
+                    <p>White-label solutions for your clients</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose Us -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title fade-in">Why 500+ Businesses Choose Us</h2>
+            <div class="why-choose fade-in">
+                <div class="why-item">
+                    <div class="why-icon">🏆</div>
+                    <h4>99.9% Uptime</h4>
+                    <p>Guaranteed reliability</p>
+                </div>
+                <div class="why-item">
+                    <div class="why-icon">⚡</div>
+                    <h4>Lightning Fast</h4>
+                    <p>Sub-100ms latency</p>
+                </div>
+                <div class="why-item">
+                    <div class="why-icon">🌏</div>
+                    <h4>Global Reach</h4>
+                    <p>200+ countries covered</p>
+                </div>
+                <div class="why-item">
+                    <div class="why-icon">🔧</div>
+                    <h4>24/7 Support</h4>
+                    <p>Expert assistance anytime</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title fade-in">What Our Customers Say</h2>
+            <div class="testimonials fade-in">
+                <div class="testimonial-grid">
+                    <div class="testimonial">
+                        <p>Voice Traffic Management has been a game-changer for our call center. We've seen a significant reduction in dropped calls and improved voice quality.</p>
+                        <div class="testimonial-author">
+                            <div class="author-avatar">RL</div>
+                            <div>
+                                <strong>Rachel Lee</strong>
+                                <div style="opacity: 0.7;">Operations Manager</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial">
+                        <p>Implementing Voice Traffic Management has increased our network reliability and uptime. Our team can focus on resolving customer issues faster.</p>
+                        <div class="testimonial-author">
+                            <div class="author-avatar">EP</div>
+                            <div>
+                                <strong>Emily Patel</strong>
+                                <div style="opacity: 0.7;">Senior Network Engineer</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial">
+                        <p>Twiching's Voice Traffic Management has helped us prioritize critical calls and ensure optimal bandwidth allocation. Customer satisfaction has never been better!</p>
+                        <div class="testimonial-author">
+                            <div class="author-avatar">DK</div>
+                            <div>
+                                <strong>David Kim</strong>
+                                <div style="opacity: 0.7;">Technical Operations Lead</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="section">
+        <div class="container">
+            <div class="cta-section fade-in">
+                <h2>Ready to streamline your communication?</h2>
+                <p>Join 500+ businesses already using our platform to enhance their communication infrastructure.</p>
+                <div class="cta-buttons">
+                    <a href="https://www.twiching.ai/get-started/" class="cta-button white">Book a Demo</a>
+                    <a href="https://www.twiching.ai/get-started/" class="cta-button" style="background: rgba(255,255,255,0.2); border: 2px solid white;">Start Free Trial</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title fade-in">Frequently Asked Questions</h2>
+            <div class="fade-in">
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>What is Voice Traffic Management, and how does it work?</span>
+                        <span class="faq-toggle">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Voice Traffic Management optimizes and directs voice calls through various networks for efficient connectivity. It analyzes traffic patterns and network conditions to dynamically route calls, ensuring high quality and minimal latency.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>How does Voice Traffic Management improve call quality?</span>
+                        <span class="faq-toggle">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Our system continuously monitors network conditions and automatically routes calls through the best available paths, reducing latency, minimizing dropped calls, and ensuring crystal-clear voice quality.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>Can Voice Traffic Management integrate with existing infrastructure?</span>
+                        <span class="faq-toggle">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes, our platform is designed for seamless integration with existing network infrastructure through standard protocols and APIs, ensuring minimal disruption during implementation.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>How does the platform address security concerns?</span>
+                        <span class="faq-toggle">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>We implement enterprise-grade security measures including encryption, fraud detection, and access controls to protect your communication infrastructure from threats.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>What industries benefit most from Voice Traffic Management?</span>
+                        <span class="faq-toggle">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Call centers, telecom providers, customer service organizations, and any business requiring reliable voice communication benefit significantly from our traffic management solutions.</p>
+                    </div>
+                </div>
+                <div style="text-align: center; margin-top: 2rem;">
+                    <a href="https://www.twiching.ai/contact-us/" class="cta-button">Contact Support</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h4>Products</h4>
+                    <ul>
+                        <li><a href="https://www.twiching.ai/products/phone-numbers/virtual-phone-numbers/">Voice Traffic Management</a></li>
+                        <li><a href="https://www.twiching.ai/products/messaging/sms-gateway/">SMS Gateway</a></li>
+                        <li><a href="https://www.twiching.ai/products/voice/sip-termination/">SIP Termination</a></li>
+                        <li><a href="https://www.twiching.ai/products/voice/call-termination/">Call Analytics</a></li>
+                        <li><a href="#">Fraud Protection</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Solutions</h4>
+                    <ul>
+                        <li><a href="#">Call Centers</a></li>
+                        <li><a href="#">Telecom Providers</a></li>
+                        <li><a href="#">Enterprise</a></li>
+                        <li><a href="#">Resellers</a></li>
+                        <li><a href="#">Healthcare</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="#">Documentation</a></li>
+                        <li><a href="#">API Reference</a></li>
+                        <li><a href="#">Case Studies</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Support Center</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Contact</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Stay Updated</h4>
+                    <p>Get the latest updates and insights delivered to your inbox.</p>
+                    <div class="newsletter">
+                        <input type="email" placeholder="Enter your email">
+                        <button class="cta-button">Subscribe</button>
+                    </div>
+                    <div style="margin-top: 1rem;">
+                        <a href="#" style="margin-right: 1rem;">LinkedIn</a>
+                        <a href="#" style="margin-right: 1rem;">Twitter</a>
+                        <a href="#">Facebook</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Twiching.ai. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('header');
+            if (window.scrollY > 100) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Intersection Observer for fade-in animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all fade-in elements
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // FAQ toggle functionality
+        function toggleFaq(element) {
+            const answer = element.nextElementSibling;
+            const toggle = element.querySelector('.faq-toggle');
+            
+            // Close all other FAQ items
+            document.querySelectorAll('.faq-answer').forEach(item => {
+                if (item !== answer) {
+                    item.classList.remove('active');
+                }
+            });
+            
+            document.querySelectorAll('.faq-toggle').forEach(item => {
+                if (item !== toggle) {
+                    item.classList.remove('active');
+                }
+            });
+            
+            // Toggle current FAQ item
+            answer.classList.toggle('active');
+            toggle.classList.toggle('active');
+        }
+
+        // Help tabs functionality
+        document.querySelectorAll('.help-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.help-tab').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+            });
+        });
+
+        // Solution cards hover effect
+        document.querySelectorAll('.solution-card').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.transform = 'translateY(-10px) rotateX(5deg)';
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'translateY(0) rotateX(0)';
+            });
+        });
+
+        // Add bounce animation to CTA buttons
+        document.querySelectorAll('.cta-button').forEach(button => {
+            button.addEventListener('mouseenter', () => {
+                button.classList.add('bounce');
+            });
+            
+            button.addEventListener('mouseleave', () => {
+                button.classList.remove('bounce');
+            });
+        });
+
+        // Testimonial carousel (simple version)
+        let currentTestimonial = 0;
+        const testimonials = document.querySelectorAll('.testimonial');
+        
+        function rotateTestimonials() {
+            testimonials.forEach((testimonial, index) => {
+                testimonial.style.opacity = index === currentTestimonial ? '1' : '0.7';
+                testimonial.style.transform = index === currentTestimonial ? 'scale(1)' : 'scale(0.95)';
+            });
+            
+            currentTestimonial = (currentTestimonial + 1) % testimonials.length;
+        }
+        
+        // Rotate testimonials every 5 seconds
+        setInterval(rotateTestimonials, 5000);
+        
+        // Initialize first testimonial
+        rotateTestimonials();
+
+        // Add loading animation
+        window.addEventListener('load', () => {
+            document.body.classList.add('loaded');
+            
+            // Add staggered animation to solution cards
+            document.querySelectorAll('.solution-card').forEach((card, index) => {
+                setTimeout(() => {
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, index * 150);
+            });
+        });
+
+        // Newsletter subscription
+        document.querySelector('.newsletter button').addEventListener('click', () => {
+            const email = document.querySelector('.newsletter input').value;
+            if (email) {
+                alert('Thank you for subscribing! We\'ll keep you updated.');
+                document.querySelector('.newsletter input').value = '';
+            }
+        });
+
+        // Add particle animation to hero section
+        function createParticle() {
+            const particle = document.createElement('div');
+            particle.style.position = 'absolute';
+            particle.style.width = '4px';
+            particle.style.height = '4px';
+            particle.style.background = 'rgba(0, 174, 239, 0.3)';
+            particle.style.borderRadius = '50%';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.top = '100%';
+            particle.style.pointerEvents = 'none';
+            particle.style.animation = 'floatUp 8s linear infinite';
+            
+            document.querySelector('.hero').appendChild(particle);
+            
+            setTimeout(() => {
+                particle.remove();
+            }, 8000);
+        }
+
+        // Add CSS for particle animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes floatUp {
+                0% {
+                    transform: translateY(0) rotate(0deg);
+                    opacity: 0;
+                }
+                10% {
+                    opacity: 1;
+                }
+                90% {
+                    opacity: 1;
+                }
+                100% {
+                    transform: translateY(-100vh) rotate(360deg);
+                    opacity: 0;
+                }
+            }
+            
+            .loaded .fade-in {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Create particles periodically
+        setInterval(createParticle, 2000);
+    </script>
+</body>
+</html>
